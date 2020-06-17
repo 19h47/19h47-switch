@@ -1,3 +1,38 @@
 # @19h47/switch
 
-https://rawgit.com/w3c/aria-practices/switch/examples/switch/switch.html
+## Installation
+
+```
+yarn add @19h47/switch
+```
+
+```javascript
+import Switch from '@19h47/switch';
+
+const $switch = document.querySelector('[role="switch"]');
+
+const switch = new Switch($switch);
+switch.init();
+```
+
+## Keyboard support
+
+| Key   | Function                                     |
+| ----- | -------------------------------------------- |
+| Tab   | Moves keyboard focus to the `switch`.        |
+| Space | Toggle switch between checked and unchecked. |
+
+## HTML source code
+
+```html
+<div tabindex="0" aria-checked="false" role="switch">
+	<span>Toggle this switch element</span>
+	<span></span>
+	<div style="display: none;"><input type="checkbox" /></div>
+</div>
+```
+
+## Acknowledgment
+
+-   [switch](https://rawgit.com/w3c/aria-practices/switch/examples/switch/switch.html)
+-   [Switch Design Pattern in WAI-ARIA Authoring Practices 1.1](https://rawgit.com/w3c/aria-practices/switch/#switch)
