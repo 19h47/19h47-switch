@@ -1,7 +1,4 @@
-import {
-	ENTER,
-	SPACE,
-} from '@19h47/keycode';
+import { ENTER, SPACE } from '@19h47/keycode';
 import EventDispatcher from './EventDispatcher';
 
 export default class Switch extends EventDispatcher {
@@ -45,7 +42,6 @@ export default class Switch extends EventDispatcher {
 
 		return (codes[key] || codes.default)();
 	}
-
 
 	toggle() {
 		if (this.checked) {
