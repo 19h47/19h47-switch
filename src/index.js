@@ -60,7 +60,7 @@ export default class Switch extends EventDispatcher {
 
 		this.checked = true;
 		this.$input.checked = true;
-		this.$input.setAttribute('checked', true);
+		this.$input.setAttribute('checked', '');
 
 		this.rootElement.setAttribute('aria-checked', true);
 
@@ -74,7 +74,7 @@ export default class Switch extends EventDispatcher {
 
 		this.checked = false;
 		this.$input.checked = false;
-		this.$input.setAttribute('checked', false);
+		this.$input.removeAttribute('checked');
 
 		this.rootElement.setAttribute('aria-checked', false);
 

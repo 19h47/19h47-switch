@@ -1,66 +1,155 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Switch</title><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"><style>[role="switch"] {
-			display: flex;
-			flex-direction: row;
-			align-items: center;
-			outline: none;
-			user-select: none;
-		}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Switch</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<style>
+			[role='switch'] {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				outline: none;
+				user-select: none;
+			}
 
-		[role="switch"] span:first-child {
-			width: 100%;
-		}
+			[role='switch'] span:first-child {
+				width: 100%;
+			}
 
-		[role="switch"] .slider {
-			display: flex;
-    		align-items: center;
-			background-color: #fff;
-			border: #adb5bd solid 1px;
-			width: 1.75rem;
-			min-width: 1.75rem;
-			height: 1rem;
-			border-radius: .5rem;
-			transition:
-				background-color .15s ease-in-out,
-				box-shadow .15s ease-in-out;
-		}
+			[role='switch'] .slider {
+				display: flex;
+				align-items: center;
+				background-color: #fff;
+				border: #adb5bd solid 1px;
+				width: 1.75rem;
+				min-width: 1.75rem;
+				height: 1rem;
+				border-radius: 0.5rem;
+				transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+			}
 
-		[role="switch"][aria-checked="true"] .slider::before {
-			background-color: #fff;
-			transform: translateX(.75rem);
-		}
+			[role='switch'][aria-checked='true'] .slider::before {
+				background-color: #fff;
+				transform: translateX(0.75rem);
+			}
 
-		[role="switch"]:focus .slider {
-			box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5);
-		}
+			[role='switch']:focus .slider {
+				box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+			}
 
-		[role="switch"][aria-checked="true"] .slider {
-			color: #fff;
-    		border-color: #007bff;
-    		background-color: #007bff;
-		}
+			[role='switch'][aria-checked='true'] .slider {
+				color: #fff;
+				border-color: #007bff;
+				background-color: #007bff;
+			}
 
-		[role="switch"] .slider::before {
-			transform: translateX(.1rem);
-		    display: block;
-			width: 12px;
-    		height: 12px;
-			border-radius: 50%;
-			background: no-repeat 50%/50% 50%;
-			background-color: #adb5bd;
-			transition: transform cubic-bezier(0.23, 1, 0.32, 1) .4s;
-			content: '';
-		}</style></head><body><div class="container"><div class="col-12 my-5"><h1><a href="https://github.com/19h47/19h47-switch">Switch<sup class="js-switch-label"></sup></a></h1></div><div class="col-12 col-md-4 my-5"><div class="js-switch" tabindex="0" aria-checked="false" role="switch"><span class="mr-3">Toggle this switch element</span> <span class="slider"></span><div class="d-none"><input type="checkbox"></div></div></div></div><script src="./main.js"></script><script>const $label = document.querySelector('.js-switch-label');
-	const $element = document.querySelector('.js-switch');
+			[role='switch'] .slider::before {
+				transform: translateX(0.1rem);
+				display: block;
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				background: no-repeat 50%/50% 50%;
+				background-color: #adb5bd;
+				transition: transform cubic-bezier(0.23, 1, 0.32, 1) 0.4s;
+				content: '';
+			}
+			.Alert {
+				margin: 1em;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				z-index: 10;
+			}
 
-	const switchButton = new Switch.default($element);
-	switchButton.init();
+			[role='switch'][disabled] {
+				opacity: 0.65;
+				pointer-events: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="Alert js-alert"></div>
+		<div class="container">
+			<div class="row my-5">
+				<div class="col-12">
+					<h1 class="m-0">
+						<a href="https://github.com/19h47/19h47-switch">Switch</a>
+					</h1>
+				</div>
+			</div>
 
-	console.log(switchButton);
+			<div class="border p-3 my-5">
+				<div class="row">
+					<div class="col-12 col-md-4">
+						<div tabindex="0" aria-checked="false" role="switch">
+							<span class="mr-3">Toggle this switch element</span>
+							<span class="slider"></span>
+							<div class="d-none"><input type="checkbox"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-	switchButton.on('Switch.deactivate', () => {
-		$label.innerHTML = 'off';
-	});
+			<div class="border p-3 my-5">
+				<div class="row">
+					<div class="col-12 col-md-4">
+						<div disabled="disabled" tabindex="0" aria-checked="false" role="switch" aria-disabled="true">
+							<span class="mr-3">Disabled switch button</span>
+							<span class="slider"></span>
+							<div class="d-none"><input type="checkbox"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	switchButton.on('Switch.activate', () => {
-		$label.innerHTML = 'on';
-	});</script></body></html>
+		<script type="text/javascript" src="./main.js"></script>
+		<script>
+			const $switchButton = document.querySelector('[role="switch"]');
+			const $alert = document.querySelector('.js-alert');
+
+			const alert = content => {
+				const div = document.createElement('div');
+
+				div.className = 'toast fade show';
+				div.style = 'toast fade show';
+				div.innerHTML = `<div class="toast-header"><strong class="mr-auto">Switch</strong></div><div class="toast-body">${content}</div>`;
+
+				div.setAttribute('role', 'alert');
+				div.setAttribute('aria-live', 'assertive');
+				div.setAttribute('aria-atomic', 'true');
+
+				return div;
+			};
+
+			const onChange = content => {
+				const $el = alert(content);
+
+				$alert.appendChild($el);
+
+				$el.addEventListener(
+					'click',
+					() => $el.style.setProperty('display', 'none'),
+					false,
+				);
+
+				setTimeout(() => $el.parentNode.removeChild($el), 2000);
+			};
+
+			const switchButton = new Switch.default($switchButton);
+			switchButton.init();
+
+			switchButton.on('Switch.deactivate', () => {
+				onChange('The button has been <strong>deactivated</strong>');
+			});
+
+			switchButton.on('Switch.activate', () => {
+				onChange('The button has been <strong>activated</strong>');
+			});
+		</script>
+	</body>
+</html>

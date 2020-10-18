@@ -6,6 +6,18 @@
 yarn add @19h47/switch
 ```
 
+## HTML
+
+```html
+<div tabindex="0" aria-checked="false" role="switch">
+	<span>Toggle this switch element</span>
+	<span></span>
+	<div style="display: none;"><input type="checkbox" /></div>
+</div>
+```
+
+## JavaScript
+
 ```javascript
 import Switch from '@19h47/switch';
 
@@ -22,14 +34,28 @@ switch.init();
 | Tab   | Moves keyboard focus to the `switch`.        |
 | Space | Toggle switch between checked and unchecked. |
 
-## HTML source code
+## Event
 
-```html
-<div tabindex="0" aria-checked="false" role="switch">
-	<span>Toggle this switch element</span>
-	<span></span>
-	<div style="display: none;"><input type="checkbox" /></div>
-</div>
+| Event             | Arguments | Description |
+| ----------------- | --------- | ----------- |
+| Switch.activate   |           |             |
+| Switch.deactivate |           |             |
+
+```javascript
+import Switch from '@19h47/switch';
+
+const $switch = document.querySelector('[role="switch"]');
+
+const switchButton = new Switch($switch);
+switchButton.init();
+
+switchButton.on('Switch.deactivate', () => {
+	console.log('deactivated');
+});
+
+switchButton.on('Switch.activate', () => {
+	console.log('activated');
+});
 ```
 
 ## Acknowledgment
