@@ -1,9 +1,9 @@
 import { ENTER, SPACE } from '@19h47/keycode';
-import EventDispatcher from './EventDispatcher';
+import { EventEmitter } from 'events';
 
-export default class Switch extends EventDispatcher {
+export default class Switch extends EventEmitter {
 	constructor(element) {
-		super(['Switch.activate', 'Switch.deactivate']);
+		super();
 
 		this.rootElement = element;
 
