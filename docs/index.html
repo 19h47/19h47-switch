@@ -6,6 +6,7 @@
 		<title>Switch</title>
 		<link rel="icon" type="image/png" href="counterclockwise-arrows.png">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous">
 		<style>
 			[role='switch'] {
 				display: flex;
@@ -15,7 +16,54 @@
 				user-select: none;
 			}
 
-			[role='switch'] span:first-child {
+			[role='switch'].large .slider {
+				position: relative;
+				display: flex;
+				align-content: center;
+				justify-content: space-between;
+				padding: 0 6px;
+				text-transform: uppercase;
+				height: 1.5rem;
+				width: 60px;
+				border-radius: 0.75rem;
+			}
+
+			[role='switch'].large .slider span {
+				text-transform: uppercase;
+				font-weight: 500;
+				font-size: 12px;
+				line-height: 12px;
+
+				opacity: 0;
+				visibility: hidden;
+				transition: opacity 0.7s ease, visibility 0.7s ease;
+			}
+
+			[role='switch'][aria-checked='false'].large .slider span:last-child {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			[role='switch'][aria-checked='true'].large .slider span:first-child {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			[role='switch'].large .slider::before {
+				position: absolute;
+				top: 0;
+				left: 0;
+				margin-top: 4px;
+				height: 14px;
+				width: 14px;
+				transform: translateX(4px);
+			}
+
+			[role='switch'][aria-checked='true'].large .slider::before {
+				transform: translateX(2.25rem);
+			}
+
+			[role='switch'] span.label {
 				width: 100%;
 			}
 
@@ -34,6 +82,10 @@
 			[role='switch'][aria-checked='true'] .slider::before {
 				background-color: #fff;
 				transform: translateX(0.75rem);
+			}
+
+			[role='switch']:hover {
+				cursor: pointer;
 			}
 
 			[role='switch']:focus .slider {
@@ -83,34 +135,58 @@
 				</div>
 			</div>
 
-			<div class="border p-3 my-5">
-				<div class="row">
-					<div class="col-12 col-md-4">
-						<div tabindex="0" aria-checked="false" role="switch">
-							<span class="mr-3">Toggle this switch element</span>
-							<span class="slider"></span>
-							<div class="d-none"><input type="checkbox"></div>
-						</div>
-					</div>
+			<div class="row my-5">
+				<div class="col-12">
+					<pre class="p-3 m-0"><code class="language-javascript">import Switch from '@19h47/switch';
+
+const $switch = document.querySelector('[role="switch"]');
+const switchButton = new Switch($switch);
+
+switchButton.init();</code></pre>
 				</div>
 			</div>
 
-			<div class="border p-3 my-5">
-				<div class="row">
-					<div class="col-12 col-md-4">
-						<div disabled="disabled" tabindex="0" aria-checked="false" role="switch" aria-disabled="true">
-							<span class="mr-3">Disabled switch button</span>
-							<span class="slider"></span>
-							<div class="d-none"><input type="checkbox"></div>
-						</div>
+			<div class="row my-5">
+				<div class="col-12 col-md-4">
+					<div class="border p-3" tabindex="0" aria-checked="false" role="switch">
+						<span class="label mr-3">Toggle this switch element</span>
+						<span class="slider"></span>
+						<div class="d-none"><input type="checkbox"></div>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-4">
+					<div class="border p-3" tabindex="0" aria-checked="false" role="switch">
+						<span class="slider"></span>
+						<span class="label ml-3 text-right">Toggle this switch element</span>
+						<div class="d-none"><input type="checkbox"></div>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-4">
+					<div class="border p-3" disabled="disabled" tabindex="0" aria-checked="false" role="switch" aria-disabled="true">
+						<span class="label mr-3">Disabled switch button</span>
+						<span class="slider"></span>
+						<div class="d-none"><input type="checkbox"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row my-5">
+				<div class="col-12">
+					<div class="large border p-3" tabindex="0" aria-checked="false" role="switch">
+						<span class="label">On and On and On and Off</span>
+						<span class="slider"><span>On</span><span>Off</span></span>
+						<div class="d-none"><input type="checkbox"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<script type="text/javascript" src="./main.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
+		<script src="./main.js"></script>
 		<script>
-			const $switchButton = document.querySelector('[role="switch"]');
+			const switches = document.querySelectorAll('[role="switch"]');
 			const $alert = document.querySelector('.js-alert');
 
 			const alert = content => {
@@ -141,15 +217,17 @@
 				setTimeout(() => $el.parentNode.removeChild($el), 2000);
 			};
 
-			const switchButton = new Switch.default($switchButton);
-			switchButton.init();
+			switches.forEach(element => {
+				const switchButton = new Switch.default(element);
+				switchButton.init();
 
-			switchButton.on('Switch.deactivate', () => {
-				onChange('The button has been <strong>deactivated</strong>');
-			});
+				switchButton.on('Switch.deactivate', () => {
+					onChange('The button has been <strong>deactivated</strong>');
+				});
 
-			switchButton.on('Switch.activate', () => {
-				onChange('The button has been <strong>activated</strong>');
+				switchButton.on('Switch.activate', () => {
+					onChange('The button has been <strong>activated</strong>');
+				});
 			});
 		</script>
 	</body>

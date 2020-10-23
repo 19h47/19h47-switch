@@ -12,8 +12,8 @@ export default class Switch extends EventEmitter {
 		this.checked = false;
 
 		// Bind.
-		this.toggle = this.toggle.bind(this);
-		this.onKeydown = this.onKeydown.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 
 	init() {
@@ -21,11 +21,13 @@ export default class Switch extends EventEmitter {
 	}
 
 	initEvents() {
-		this.rootElement.addEventListener('click', this.toggle);
-		this.rootElement.addEventListener('keydown', this.onKeydown);
+		this.rootElement.addEventListener('click', this.handleClick);
+		this.rootElement.addEventListener('keydown', this.handleKeydown);
 	}
 
-	onKeydown(event) {
+	handleClick = () => this.toggle();
+
+	handleKeydown(event) {
 		const key = event.keyCode || event.which;
 
 		const toggle = () => {
@@ -52,8 +54,6 @@ export default class Switch extends EventEmitter {
 	}
 
 	activate() {
-		// console.log('Switch.on');
-
 		if (this.checked) {
 			return false;
 		}

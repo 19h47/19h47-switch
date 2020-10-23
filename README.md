@@ -23,8 +23,8 @@ import Switch from '@19h47/switch';
 
 const $switch = document.querySelector('[role="switch"]');
 
-const switch = new Switch($switch);
-switch.init();
+const switchButton = new Switch($switch);
+switchButton.init();
 ```
 
 ## Keyboard support
