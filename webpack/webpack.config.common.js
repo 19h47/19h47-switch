@@ -1,11 +1,10 @@
 /**
  *
  * @file webpack.config.common.js
- * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 
 // Plugins
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 
@@ -20,6 +19,7 @@ module.exports = {
 		library: 'Switch',
 		libraryTarget: 'umd',
 		filename: '../[name]/main.js',
+		clean: true,
 	},
 	devServer: {
 		contentBase: resolve('/'),
@@ -51,9 +51,6 @@ module.exports = {
 		],
 	},
 	plugins: [
-		new CleanWebpackPlugin({
-			cleanOnceBeforeBuildPatterns: [resolve('dist'), resolve('docs')],
-		}),
 		new HtmlWebpackPlugin({
 			filename: resolve('docs/index.html'),
 			template: resolve('index.html'),
