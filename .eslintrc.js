@@ -6,7 +6,7 @@ module.exports = {
 		node: true,
 		browser: true,
 	},
-	extends: ['standard', 'airbnb-base', 'prettier'],
+	extends: ['airbnb-base', 'prettier'],
 	rules: {
 		'arrow-parens': ['error', 'as-needed'],
 		'no-console': 'off',
@@ -18,7 +18,7 @@ module.exports = {
 		yoda: [2, 'always'],
 		'import/no-named-as-default': 0,
 	},
-	parser: 'babel-eslint',
+	parser: '@babel/eslint-parser',
 	parserOptions: {
 		sourceType: 'module',
 		allowImportExportEverywhere: true,

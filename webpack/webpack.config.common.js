@@ -1,12 +1,15 @@
 /**
+ * Common
  *
  * @file webpack.config.common.js
  * @author Jérémy Levron <jeremylevron@19h47.fr> (https://19h47.fr)
  */
 
 // Plugins
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const resolve = require('./webpack.utils');
 
@@ -19,15 +22,12 @@ module.exports = {
 		library: 'Switch',
 		libraryTarget: 'umd',
 		filename: '../[name]/main.js',
-		clean: true,
+		path: resolve('/dist'),
 	},
 	devServer: {
-		contentBase: resolve('/'),
-		compress: true,
 		port: 3000,
-		inline: true,
-		disableHostCheck: true,
-		writeToDisk: true,
+		static: [resolve('/')],
+		compress: true,
 	},
 	resolve: {
 		alias: {
@@ -38,12 +38,6 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				enforce: 'pre',
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loader: 'eslint-loader',
-			},
-			{
 				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
@@ -51,6 +45,9 @@ module.exports = {
 		],
 	},
 	plugins: [
+		new CleanWebpackPlugin({
+			cleanOnceBeforeBuildPatterns: [resolve('dist'), resolve('docs')],
+		}),
 		new HtmlWebpackPlugin({
 			filename: resolve('docs/index.html'),
 			template: resolve('index.html'),
@@ -62,5 +59,6 @@ module.exports = {
 			excludeWarnings: true,
 			alwaysNotify: true,
 		}),
+		new ESLintPlugin(),
 	],
 };
