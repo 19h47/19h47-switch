@@ -15,8 +15,8 @@ const resolve = require('./webpack.utils');
 
 module.exports = {
 	entry: {
-		dist: resolve('src/index.js'),
-		docs: resolve('src/index.js'),
+		dist: resolve('lib/index.ts'),
+		docs: resolve('lib/index.ts'),
 	},
 	output: {
 		library: 'Switch',
@@ -30,17 +30,18 @@ module.exports = {
 		compress: true,
 	},
 	resolve: {
+		extensions: ['.ts', '.tsx', '.js'],
 		alias: {
-			'@': resolve('src'),
-			Utils: resolve('src/utils'),
+			'@': resolve('lib'),
+			Utils: resolve('lib/utils'),
 		},
 	},
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
+				test: /\.tsx?$/,
+				use: 'ts-loader',
 				exclude: /node_modules/,
-				loader: 'babel-loader',
 			},
 		],
 	},

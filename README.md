@@ -29,10 +29,10 @@ switchButton.init();
 
 ## Keyboard support
 
-| Key   | Function                                     |
-| ----- | -------------------------------------------- |
-| Tab   | Moves keyboard focus to the `switch`.        |
-| Space | Toggle switch between checked and unchecked. |
+| Key                                  | Function                                                |
+| ------------------------------------ | ------------------------------------------------------- |
+| <kbd>Tab</kbd>                       | <ul><li>Moves keyboard focus to the `switch`.</li></ul> |
+| <kbd>Space</kbd><br><kbd>Enter</kbd> | <ul><li>Toggle switch between on and off.</li></ul>     |
 
 ## Event
 
@@ -60,5 +60,5 @@ switchButton.on('Switch.activate', () => {
 
 ## Acknowledgment
 
--   [switch](https://rawgit.com/w3c/aria-practices/switch/examples/switch/switch.html)
--   [Switch Design Pattern in WAI-ARIA Authoring Practices 1.1](https://rawgit.com/w3c/aria-practices/switch/#switch)
+-   [Switch Example](https://www.w3.org/WAI/ARIA/apg/patterns/switch/examples/switch/)
+-   [Switch Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)
