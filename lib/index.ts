@@ -11,6 +11,11 @@ export default class Switch extends EventEmitter {
 		this.el = el;
 
 		this.$input = this.el.querySelector<HTMLInputElement>('input[type="checkbox"]');
+
+		if (this.$input?.checked) {
+			this.checked = true;
+			this.el.setAttribute('aria-checked', 'true');
+		}
 	}
 
 	init(): void {
