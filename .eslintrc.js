@@ -1,4 +1,4 @@
-const plugins = ['@babel'];
+const plugins = [];
 
 module.exports = {
 	root: true,
@@ -6,7 +6,7 @@ module.exports = {
 		node: true,
 		browser: true,
 	},
-	extends: ['standard', 'airbnb-base', 'prettier'],
+	extends: ['airbnb-base', 'prettier'],
 	rules: {
 		'arrow-parens': ['error', 'as-needed'],
 		'no-console': 'off',
@@ -18,15 +18,10 @@ module.exports = {
 		yoda: [2, 'always'],
 		'import/no-named-as-default': 0,
 	},
-	parser: 'babel-eslint',
-	parserOptions: {
-		sourceType: 'module',
-		allowImportExportEverywhere: true,
-	},
 	settings: {
 		'import/resolver': {
 			webpack: {
-				config: 'webpack/webpack.config.common.js',
+				config: './webpack/webpack.config.common.js',
 			},
 		},
 	},
