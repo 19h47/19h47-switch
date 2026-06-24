@@ -1,21 +1,13 @@
-import { EventEmitter } from 'events';
-
-export default class Switch extends EventEmitter {
+export default class Switch {
 	el: HTMLElement;
 	$input: HTMLInputElement | null = null;
 	checked: boolean = false;
 
-	constructor(el : HTMLElement) {
-		super();
-
+	constructor(el: HTMLElement) {
 		this.el = el;
 
 		this.$input = this.el.querySelector<HTMLInputElement>('input[type="checkbox"]');
-
-		if (this.$input?.checked) {
-			this.checked = true;
-			this.el.setAttribute('aria-checked', 'true');
-		}
+		this.checked = this.el.getAttribute('aria-checked') === 'true';
 	}
 
 	init(): void {
@@ -27,9 +19,23 @@ export default class Switch extends EventEmitter {
 		this.el.addEventListener('keydown', this.handleKeydown);
 	}
 
-	handleClick = () => this.toggle();
+	get disabled(): boolean {
+		return this.el.getAttribute('aria-disabled') === 'true';
+	}
+
+	handleClick = () => {
+		if (this.disabled) {
+			return;
+		}
+
+		this.toggle();
+	};
 
 	handleKeydown = (event: KeyboardEvent) => {
+		if (this.disabled) {
+			return;
+		}
+
 		const key = event.code;
 
 		const toggle = () => {
@@ -38,16 +44,20 @@ export default class Switch extends EventEmitter {
 			event.preventDefault();
 		};
 
-		const codes : any = {
+		const codes: Record<string, () => boolean | void> = {
 			Space: toggle,
 			Enter: toggle,
 			default: () => false,
 		};
 
 		return (codes[key] || codes.default)();
-	}
+	};
 
 	toggle(): boolean {
+		if (this.disabled) {
+			return false;
+		}
+
 		if (this.checked) {
 			return this.deactivate();
 		}
@@ -66,7 +76,11 @@ export default class Switch extends EventEmitter {
 
 		this.el.setAttribute('aria-checked', 'true');
 
-		return this.emit('Switch.activate', this.el);
+		return this.el.dispatchEvent(
+			new CustomEvent('Switch.activate', {
+				bubbles: true,
+			}),
+		);
 	}
 
 	deactivate(): boolean {
@@ -80,6 +94,10 @@ export default class Switch extends EventEmitter {
 
 		this.el.setAttribute('aria-checked', 'false');
 
-		return this.emit('Switch.deactivate', this.el);
+		return this.el.dispatchEvent(
+			new CustomEvent('Switch.deactivate', {
+				bubbles: true,
+			}),
+		);
 	}
 }

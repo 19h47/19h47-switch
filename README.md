@@ -1,18 +1,32 @@
 # @19h47/switch
 
+A switch is an on/off control that represents a binary setting. It provides an accessible, keyboard-navigable interface following the [ARIA switch pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/), reads its state from the markup, and dispatches native DOM events when toggled.
+
 ## Installation
 
 ```
-yarn add @19h47/switch
+pnpm add @19h47/switch
 ```
 
 ## HTML
 
 ```html
-<div tabindex="0" aria-checked="false" role="switch">
-	<span>Toggle this switch element</span>
-	<span></span>
-	<div style="display: none;"><input type="checkbox" /></div>
+<div role="switch" tabindex="0" aria-checked="false">
+	<span class="label">Notifications</span>
+	<span class="switch"><span></span></span>
+	<span class="on" aria-hidden="true">On</span>
+	<span class="off" aria-hidden="true">Off</span>
+	<div hidden><input type="checkbox" /></div>
+</div>
+```
+
+When disabled, use `aria-disabled="true"` and `tabindex="-1"`.
+
+```html
+<div role="switch" tabindex="-1" aria-checked="false" aria-disabled="true">
+	<span class="label">Disabled switch</span>
+	<span class="switch"><span></span></span>
+	<div hidden><input type="checkbox" /></div>
 </div>
 ```
 
@@ -36,10 +50,12 @@ switchButton.init();
 
 ## Event
 
-| Event             | Arguments | Description |
-| ----------------- | --------- | ----------- |
-| Switch.activate   |           |             |
-| Switch.deactivate |           |             |
+Events are dispatched on the switch element.
+
+| Event             | Description              |
+| ----------------- | ------------------------ |
+| Switch.activate   | Fired when activated.    |
+| Switch.deactivate | Fired when deactivated.  |
 
 ```javascript
 import Switch from '@19h47/switch';
@@ -49,11 +65,11 @@ const $switch = document.querySelector('[role="switch"]');
 const switchButton = new Switch($switch);
 switchButton.init();
 
-switchButton.on('Switch.deactivate', () => {
+$switch.addEventListener('Switch.deactivate', () => {
 	console.log('deactivated');
 });
 
-switchButton.on('Switch.activate', () => {
+$switch.addEventListener('Switch.activate', () => {
 	console.log('activated');
 });
 ```

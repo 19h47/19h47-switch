@@ -1,22 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Switch</title>
-		<link rel="icon" type="image/png" href="counterclockwise-arrows.png">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-		<link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
+		<link rel="icon" type="image/png" href="counterclockwise-arrows.png" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css"
+			rel="stylesheet"
+		/>
 		<style>
-			[role='switch'] {
+			[role="switch"] {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
-				outline: none;
+				margin: 2px;
+				outline: 2px solid transparent;
+				outline-offset: -2px;
 				user-select: none;
+				transition:
+					background-color 0.15s ease-in-out,
+					outline-color 0.15s ease-in-out;
 			}
 
-			[role='switch'].large .slider {
+			[role="switch"]:focus,
+			[role="switch"]:hover {
+				background-color: #def;
+				outline-color: #005a9c;
+				cursor: pointer;
+			}
+
+			[role="switch"]:focus .slider,
+			[role="switch"]:hover .slider {
+				background-color: #fff;
+			}
+
+			[role="switch"][aria-checked="true"]:focus .slider,
+			[role="switch"][aria-checked="true"]:hover .slider {
+				background-color: #007bff;
+				border-color: #007bff;
+			}
+
+			[role="switch"].large .slider {
 				position: relative;
 				display: flex;
 				align-content: center;
@@ -28,28 +57,29 @@
 				border-radius: 0.75rem;
 			}
 
-			[role='switch'].large .slider span {
+			[role="switch"].large .slider span {
 				text-transform: uppercase;
 				font-weight: 500;
 				font-size: 12px;
 				line-height: 12px;
-
 				opacity: 0;
 				visibility: hidden;
-				transition: opacity 0.7s ease, visibility 0.7s ease;
+				transition:
+					opacity 0.7s ease,
+					visibility 0.7s ease;
 			}
 
-			[role='switch'][aria-checked='false'].large .slider span:last-child {
+			[role="switch"][aria-checked="false"].large .slider span:last-child {
 				opacity: 1;
 				visibility: visible;
 			}
 
-			[role='switch'][aria-checked='true'].large .slider span:first-child {
+			[role="switch"][aria-checked="true"].large .slider span:first-child {
 				opacity: 1;
 				visibility: visible;
 			}
 
-			[role='switch'].large .slider::before {
+			[role="switch"].large .slider::before {
 				position: absolute;
 				top: 0;
 				left: 0;
@@ -59,15 +89,15 @@
 				transform: translateX(4px);
 			}
 
-			[role='switch'][aria-checked='true'].large .slider::before {
+			[role="switch"][aria-checked="true"].large .slider::before {
 				transform: translateX(2.25rem);
 			}
 
-			[role='switch'] span.label {
+			[role="switch"] span.label {
 				width: 100%;
 			}
 
-			[role='switch'] .slider {
+			[role="switch"] .slider {
 				display: flex;
 				align-items: center;
 				background-color: #fff;
@@ -76,29 +106,18 @@
 				min-width: 1.75rem;
 				height: 1rem;
 				border-radius: 0.5rem;
-				transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+				transition:
+					background-color 0.15s ease-in-out,
+					box-shadow 0.15s ease-in-out;
 			}
 
-			[role='switch'][aria-checked='true'] .slider::before {
-				background-color: #fff;
-				transform: translateX(0.75rem);
-			}
-
-			[role='switch']:hover {
-				cursor: pointer;
-			}
-
-			[role='switch']:focus .slider {
-				box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
-			}
-
-			[role='switch'][aria-checked='true'] .slider {
+			[role="switch"][aria-checked="true"] .slider {
 				color: #fff;
 				border-color: #007bff;
 				background-color: #007bff;
 			}
 
-			[role='switch'] .slider::before {
+			[role="switch"] .slider::before {
 				transform: translateX(0.1rem);
 				display: block;
 				width: 12px;
@@ -107,22 +126,47 @@
 				background: no-repeat 50%/50% 50%;
 				background-color: #adb5bd;
 				transition: transform cubic-bezier(0.23, 1, 0.32, 1) 0.4s;
-				content: '';
+				content: "";
 			}
+
+			[role="switch"][aria-checked="true"] .slider::before {
+				background-color: #fff;
+				transform: translateX(0.75rem);
+			}
+
 			.Alert {
 				margin: 1em;
 				position: fixed;
 				top: 0;
-				bottom: 0;
 				right: 0;
-				z-index: 10;
+				z-index: 1050;
+				pointer-events: none;
 			}
 
-			[role='switch'][disabled] {
+			.Alert .Toast {
+				display: block;
+				opacity: 1;
+				min-width: 250px;
+				margin-bottom: 0.5rem;
+				pointer-events: auto;
+				background-color: #fff;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+			}
+
+			[role="switch"][aria-disabled="true"] {
 				opacity: 0.65;
 				pointer-events: none;
 			}
+
+			[role="switch"][aria-disabled="true"]:hover,
+			[role="switch"][aria-disabled="true"]:focus {
+				background-color: transparent;
+				outline-color: transparent;
+				cursor: not-allowed;
+			}
 		</style>
+		<script type="module" crossorigin src="./assets/index-Cpm8Nx8Q.js"></script>
 	</head>
 	<body>
 		<div class="Alert js-alert"></div>
@@ -139,10 +183,21 @@
 				<div class="col-12">
 					<pre class="p-3 m-0"><code class="language-javascript">import Switch from '@19h47/switch';
 
-const $switch = document.querySelector('[role="switch"]');
-const switchButton = new Switch($switch);
+const $switches = document.querySelectorAll('[role="switch"]');
 
-switchButton.init();</code></pre>
+[...$switches].forEach($switch => {
+	const switchButton = new Switch($switch);
+
+	switchButton.init();
+
+	$switch.addEventListener('Switch.deactivate', () => {
+		console.log('deactivated');
+	});
+
+	$switch.addEventListener('Switch.activate', () => {
+		console.log('activated');
+	});
+});</code></pre>
 				</div>
 			</div>
 
@@ -151,7 +206,7 @@ switchButton.init();</code></pre>
 					<div class="border p-3" tabindex="0" aria-checked="false" role="switch">
 						<span class="label mr-3">Toggle this switch element</span>
 						<span class="slider"></span>
-						<div class="d-none"><input type="checkbox"></div>
+						<div class="d-none"><input type="checkbox" /></div>
 					</div>
 				</div>
 
@@ -159,24 +214,34 @@ switchButton.init();</code></pre>
 					<div class="border p-3" tabindex="0" aria-checked="false" role="switch">
 						<span class="slider"></span>
 						<span class="label ml-3 text-right">Toggle this switch element</span>
-						<div class="d-none"><input type="checkbox"></div>
+						<div class="d-none"><input type="checkbox" /></div>
 					</div>
 				</div>
 
 				<div class="col-12 col-md-4">
-					<div class="border p-3" disabled="disabled" tabindex="-1" aria-checked="false" role="switch" aria-disabled="true">
+					<div
+						class="border p-3"
+						tabindex="-1"
+						aria-checked="false"
+						role="switch"
+						aria-disabled="true"
+					>
 						<span class="label mr-3">Disabled switch button</span>
 						<span class="slider"></span>
-						<div class="d-none"><input type="checkbox"></div>
+						<div class="d-none"><input type="checkbox" /></div>
 					</div>
 				</div>
 			</div>
+
 			<div class="row my-5">
 				<div class="col-12">
 					<div class="large border p-3" tabindex="0" aria-checked="false" role="switch">
 						<span class="label">On and On and On and Off</span>
-						<span class="slider"><span>On</span><span>Off</span></span>
-						<div class="d-none"><input type="checkbox"></div>
+						<span class="slider">
+							<span aria-hidden="true">On</span>
+							<span aria-hidden="true">Off</span>
+						</span>
+						<div class="d-none"><input type="checkbox" /></div>
 					</div>
 				</div>
 			</div>
@@ -184,51 +249,5 @@ switchButton.init();</code></pre>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/prism.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.22.0/plugins/autoloader/prism-autoloader.min.js"></script>
-		<script src="./main.js"></script>
-		<script>
-			const switches = document.querySelectorAll('[role="switch"]');
-			const $alert = document.querySelector('.js-alert');
-
-			const alert = content => {
-				const div = document.createElement('div');
-
-				div.className = 'toast fade show';
-				div.style = 'toast fade show';
-				div.innerHTML = `<div class="toast-header"><strong class="mr-auto">Switch</strong></div><div class="toast-body">${content}</div>`;
-
-				div.setAttribute('role', 'alert');
-				div.setAttribute('aria-live', 'assertive');
-				div.setAttribute('aria-atomic', 'true');
-
-				return div;
-			};
-
-			const onChange = content => {
-				const $el = alert(content);
-
-				$alert.appendChild($el);
-
-				$el.addEventListener(
-					'click',
-					() => $el.style.setProperty('display', 'none'),
-					false,
-				);
-
-				setTimeout(() => $el.parentNode.removeChild($el), 2000);
-			};
-
-			switches.forEach(element => {
-				const switchButton = new Switch.default(element);
-				switchButton.init();
-
-				switchButton.on('Switch.deactivate', () => {
-					onChange('The button has been <strong>deactivated</strong>');
-				});
-
-				switchButton.on('Switch.activate', () => {
-					onChange('The button has been <strong>activated</strong>');
-				});
-			});
-		</script>
 	</body>
 </html>
